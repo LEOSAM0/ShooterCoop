@@ -6,7 +6,6 @@
 #include "GameFramework/Actor.h"
 #include "MyActor.generated.h"
 
-class UStaticMeshComponent;
 
 UCLASS()
 class SHOOTERCOOP_API AMyActor : public AActor
@@ -19,7 +18,7 @@ public:
 
 	int32 GetInteger() const { return Integer1; }
 
-	void SetInteger(int32 val) { val = Integer1; }
+	//void SetInteger(int32 val) { val = Integer1; }
 
 protected:
 	// Called when the game starts or when spawned

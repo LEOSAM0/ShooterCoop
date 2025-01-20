@@ -2,7 +2,6 @@
 
 
 #include "MyActor.h"
-#include "Components/StaticMeshComponent.h"
 
 // Sets default values
 AMyActor::AMyActor()
@@ -10,8 +9,6 @@ AMyActor::AMyActor()
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
-
-	GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Green, TEXT("Hello!"));
 
 }
 
@@ -22,7 +19,10 @@ void AMyActor::BeginPlay()
 
 	UE_LOG(LogSubtitle, Error, TEXT("Here I am Will you send me an angel?"))
 
-	GEngine->AddOnScreenDebugMessage(3, 2.f, FColor::Green, TEXT("Sleep Now In The Fire!"));
+	if (GEngine)
+	{
+		GEngine->AddOnScreenDebugMessage(3, 2.f, FColor::Green, TEXT("Sleep Now In The Fire!"));
+	}
 	
 }
 
@@ -34,3 +34,4 @@ void AMyActor::Tick(float DeltaTime)
 
 
 }
+
