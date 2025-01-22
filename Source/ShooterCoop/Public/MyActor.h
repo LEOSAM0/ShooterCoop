@@ -18,8 +18,6 @@ public:
 
 	int32 GetInteger() const { return Integer1; }
 
-	//void SetInteger(int32 val) { val = Integer1; }
-
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;

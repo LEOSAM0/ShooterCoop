@@ -17,7 +17,7 @@ void AMyActor::BeginPlay()
 {
 	Super::BeginPlay();
 
-	UE_LOG(LogSubtitle, Error, TEXT("Here I am Will you send me an angel?"))
+	UE_LOG(LogSubtitle, Display, TEXT("Here I am Will you send me an angel?"))
 
 	if (GEngine)
 	{

@@ -40,12 +40,10 @@ bool FMyActorTest::RunTest(const FString& Parameters)
 	}
 
 	AMyActor* MyActor = World->SpawnActor<AMyActor>(AMyActor::StaticClass(), FTransform::Identity);
-	
 	if (!TestNotNull("Actor exists", MyActor))
 	{
 		return false;
 	}
-	
 	TestGreaterEqual("GreaterEqual", MyActor->GetInteger(), 0);
 	
 	ADD_LATENT_AUTOMATION_COMMAND(FExitGameCommand);
