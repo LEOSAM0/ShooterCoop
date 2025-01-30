@@ -42,8 +42,15 @@ AShooterCoopCharacter::AShooterCoopCharacter()
 	// Create a camera boom (pulls in towards the player if there is a collision)
 	CameraBoom = CreateDefaultSubobject<USpringArmComponent>(TEXT("CameraBoom"));
 	CameraBoom->SetupAttachment(RootComponent);
-	CameraBoom->TargetArmLength = 400.0f; // The camera follows at this distance behind the character	
+	CameraBoom->TargetArmLength = 350.0f; // The camera follows at this distance behind the character	
 	CameraBoom->bUsePawnControlRotation = true; // Rotate the arm based on the controller
+
+	CameraBoom->SocketOffset = FVector(0.0f, 0.0f, 100.0f);
+	CameraBoom->TargetOffset = FVector(0.0f, 80.0f, 0.0f);
+	CameraBoom->bEnableCameraLag = true;
+	CameraBoom->CameraLagSpeed = 10.f;
+	CameraBoom->bEnableCameraRotationLag = true;
+	CameraBoom->CameraRotationLagSpeed = 7.f;
 
 	// Create a follow camera
 	FollowCamera = CreateDefaultSubobject<UCameraComponent>(TEXT("FollowCamera"));

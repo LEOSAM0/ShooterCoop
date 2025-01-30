@@ -38,7 +38,7 @@ bool FMyActorTest::RunTest(const FString& Parameters)
 	{
 		return false;
 	}
-
+	
 	AMyActor* MyActor = World->SpawnActor<AMyActor>(AMyActor::StaticClass(), FTransform::Identity);
 	if (!TestNotNull("Actor exists", MyActor))
 	{
