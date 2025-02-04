@@ -44,6 +44,18 @@ class AShooterCoopCharacter : public ACharacter
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
 	UInputAction* LookAction;
 
+	/** Crouch Input Action */
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
+	UInputAction* CrouchAction;
+
+	/** Run Input Action */
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
+	UInputAction* RunAction;
+
+	/** Weapon Input Action */
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
+	UInputAction* WeaponAction;
+
 public:
 	AShooterCoopCharacter();
 	
@@ -55,7 +67,24 @@ protected:
 
 	/** Called for looking input */
 	void Look(const FInputActionValue& Value);
-			
+
+	/** Called for crouching input */
+	void CrouchEvent(const FInputActionValue& Value);
+	void CrouchEventOff(const FInputActionValue& Value);
+
+	/** Called for running input */
+	void RunEvent(const FInputActionValue& Value);
+
+	/** Called for weapon input */
+	void WeaponEvent(const FInputActionValue& Value);
+	void WeaponEventOff(const FInputActionValue& Value);
+
+
+	float WalkSpeed = 500.f;
+	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Movement")
+	float RunSpeed = 900.f;
+
 
 protected:
 
@@ -69,4 +98,7 @@ public:
 	/** Returns FollowCamera subobject **/
 	FORCEINLINE class UCameraComponent* GetFollowCamera() const { return FollowCamera; }
 };
+
+
+
 

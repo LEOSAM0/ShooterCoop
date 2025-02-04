@@ -34,7 +34,7 @@ AShooterCoopCharacter::AShooterCoopCharacter()
 	// instead of recompiling to adjust them
 	GetCharacterMovement()->JumpZVelocity = 700.f;
 	GetCharacterMovement()->AirControl = 0.35f;
-	GetCharacterMovement()->MaxWalkSpeed = 500.f;
+	GetCharacterMovement()->MaxWalkSpeed = WalkSpeed;
 	GetCharacterMovement()->MinAnalogWalkSpeed = 20.f;
 	GetCharacterMovement()->BrakingDecelerationWalking = 2000.f;
 	GetCharacterMovement()->BrakingDecelerationFalling = 1500.0f;
@@ -80,6 +80,8 @@ void AShooterCoopCharacter::NotifyControllerChanged()
 
 void AShooterCoopCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
+	Super::SetupPlayerInputComponent(PlayerInputComponent);
+
 	// Set up action bindings
 	if (UEnhancedInputComponent* EnhancedInputComponent = Cast<UEnhancedInputComponent>(PlayerInputComponent)) {
 		
@@ -92,6 +94,17 @@ void AShooterCoopCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInp
 
 		// Looking
 		EnhancedInputComponent->BindAction(LookAction, ETriggerEvent::Triggered, this, &AShooterCoopCharacter::Look);
+
+		// Crouch
+		EnhancedInputComponent->BindAction(CrouchAction, ETriggerEvent::Started, this,  &AShooterCoopCharacter::CrouchEvent);
+		EnhancedInputComponent->BindAction(CrouchAction, ETriggerEvent::Started, this,  &AShooterCoopCharacter::CrouchEventOff);
+
+		//Run
+		EnhancedInputComponent->BindAction(RunAction, ETriggerEvent::Started, this,  &AShooterCoopCharacter::RunEvent);
+		
+		//Weapon On/Off
+		EnhancedInputComponent->BindAction(WeaponAction, ETriggerEvent::Started, this, &AShooterCoopCharacter::WeaponEvent);// <-under construction
+		EnhancedInputComponent->BindAction(WeaponAction, ETriggerEvent::Started, this, &AShooterCoopCharacter::WeaponEventOff);// <-under construction
 	}
 	else
 	{
@@ -133,4 +146,39 @@ void AShooterCoopCharacter::Look(const FInputActionValue& Value)
 		AddControllerYawInput(LookAxisVector.X);
 		AddControllerPitchInput(LookAxisVector.Y);
 	}
+}
+
+void AShooterCoopCharacter::CrouchEvent(const FInputActionValue& Value)
+{
+		Crouch();
+}
+
+void AShooterCoopCharacter::CrouchEventOff(const FInputActionValue& Value)
+{
+		UnCrouch();
+}
+
+void AShooterCoopCharacter::RunEvent(const FInputActionValue& Value)
+{
+	if (GetCharacterMovement()->MaxWalkSpeed == RunSpeed)
+	{
+		GetCharacterMovement()->MaxWalkSpeed = WalkSpeed;
+	}
+	else
+	{
+		GetCharacterMovement()->MaxWalkSpeed = RunSpeed;
+	}
+}
+
+
+
+
+void AShooterCoopCharacter::WeaponEvent(const FInputActionValue& Value)
+{
+	GEngine->AddOnScreenDebugMessage(-1, 2.f, FColor::Cyan, TEXT("HI"));
+}
+
+void AShooterCoopCharacter::WeaponEventOff(const FInputActionValue& Value)
+{
+	GEngine->AddOnScreenDebugMessage(-1, 2.f, FColor::Green, TEXT("YO"));
 }
