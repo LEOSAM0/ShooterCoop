@@ -24,6 +24,10 @@
 		{
 			"Name": "FunctionalTestingEditor",
 			"Enabled": true
+		},
+		{
+			"Name": "AttachmentSync",
+			"Enabled": true
 		}
 	],
 	"TargetPlatforms": [
