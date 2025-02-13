@@ -3,8 +3,9 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "GameFramework/Character.h"
+//#include "GameFramework/Character.h"
 #include "Logging/LogMacros.h"
+#include "Framework/BaseCharacter.h"
 #include "ShooterCoopCharacter.generated.h"
 
 class USpringArmComponent;
@@ -16,7 +17,7 @@ struct FInputActionValue;
 DECLARE_LOG_CATEGORY_EXTERN(LogTemplateCharacter, Log, All);
 
 UCLASS(config=Game)
-class AShooterCoopCharacter : public ACharacter
+class AShooterCoopCharacter : public ABaseCharacter//ACharacter
 {
 	GENERATED_BODY()
 
@@ -84,6 +85,10 @@ protected:
 	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Movement")
 	float RunSpeed = 900.f;
+
+
+	UPROPERTY(EditAnywhere)	
+	class USceneComponent* SpawnLocation;
 
 
 protected:
