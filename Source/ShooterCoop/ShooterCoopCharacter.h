@@ -57,6 +57,10 @@ class AShooterCoopCharacter : public ABaseCharacter//ACharacter
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
 	UInputAction* WeaponAction;
 
+	/** Ammo Input Action */
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
+	UInputAction* AmmoAction;
+
 public:
 	AShooterCoopCharacter();
 	
@@ -80,6 +84,9 @@ protected:
 	void WeaponEvent(const FInputActionValue& Value);
 	void WeaponEventOff(const FInputActionValue& Value);
 
+	/** Called for ammo input */
+	void AmmoEvent(const FInputActionValue& Value);
+
 
 	float WalkSpeed = 500.f;
 	
@@ -89,6 +96,11 @@ protected:
 
 	UPROPERTY(EditAnywhere)	
 	class USceneComponent* SpawnLocation;
+
+	AActor* ShowActor();
+
+	UPROPERTY(EditAnywhere, Category = "VALUE")
+	TSubclassOf<class ATestActorModule> TestActorMod;
 
 
 protected:

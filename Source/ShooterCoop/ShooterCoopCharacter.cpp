@@ -10,7 +10,7 @@
 #include "EnhancedInputComponent.h"
 #include "EnhancedInputSubsystems.h"
 #include "InputActionValue.h"
-
+#include "TestModule/TestActorModule.h"
 
 DEFINE_LOG_CATEGORY(LogTemplateCharacter);
 
@@ -59,7 +59,7 @@ AShooterCoopCharacter::AShooterCoopCharacter()
 	FollowCamera->bUsePawnControlRotation = false; // Camera does not rotate relative to arm
 
 	SpawnLocation = CreateDefaultSubobject<USceneComponent>("SpawnLocation");
-	SpawnLocation->SetupAttachment(RootComponent);
+	//SpawnLocation->SetupAttachment(RootComponent);
 
 	// Note: The skeletal mesh and anim blueprint references on the Mesh component (inherited from Character) 
 	// are set in the derived blueprint asset named ThirdPersonCharacter (to avoid direct content references in C++)
@@ -67,6 +67,13 @@ AShooterCoopCharacter::AShooterCoopCharacter()
 
 //////////////////////////////////////////////////////////////////////////
 // Input
+AActor* AShooterCoopCharacter::ShowActor()
+{
+	FActorSpawnParameters SpawnParams;
+	SpawnParams.Instigator = this;
+	AActor* SpawnActor = GetWorld()->SpawnActor<ATestActorModule>(TestActorMod, SpawnLocation->GetComponentLocation(), GetActorRotation(), SpawnParams);
+	return SpawnActor;
+}
 
 
 void AShooterCoopCharacter::NotifyControllerChanged()
@@ -110,6 +117,9 @@ void AShooterCoopCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInp
 		//Weapon On/Off
 		EnhancedInputComponent->BindAction(WeaponAction, ETriggerEvent::Started, this, &AShooterCoopCharacter::WeaponEvent);// <-under construction
 		EnhancedInputComponent->BindAction(WeaponAction, ETriggerEvent::Started, this, &AShooterCoopCharacter::WeaponEventOff);// <-under construction
+
+		//Ammo
+		EnhancedInputComponent->BindAction(AmmoAction, ETriggerEvent::Triggered, this, &AShooterCoopCharacter::AmmoEvent);
 	}
 	else
 	{
@@ -186,4 +196,11 @@ void AShooterCoopCharacter::WeaponEvent(const FInputActionValue& Value)
 void AShooterCoopCharacter::WeaponEventOff(const FInputActionValue& Value)
 {
 	GEngine->AddOnScreenDebugMessage(-1, 2.f, FColor::Green, TEXT("YO"));
+}
+
+
+
+void AShooterCoopCharacter::AmmoEvent(const FInputActionValue& Value)
+{
+	ShowActor();
 }
